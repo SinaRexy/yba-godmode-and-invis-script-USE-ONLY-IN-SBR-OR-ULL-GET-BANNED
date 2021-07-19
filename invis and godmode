@@ -1,0 +1,34 @@
+_G.bypass = true -- make it to false in order to reset / Default : true
+_G.godmode = false -- make the bypass false too in order to disable godmode and reset
+_G.invisible = false -- make the bypass false too in order to disable invisble and reset hide in some place and make it true
+ 
+local Hook
+Hook = hookfunction(getrawmetatable(game).__namecall, newcclosure(function(self, ...)
+  local args = {...}
+  if self.Name == "RemoteEvent" and _G.bypass == true  then
+      if args[1] == "Reset"  then
+          return wait(9e9)
+      elseif _G.bypass == false then
+        return Hook(self,...)
+      end
+  end
+  return Hook(self, ...)
+end))
+ 
+-- bypass must be enabled to get the godmode effect in order to disable godmode you need to reset
+ 
+while _G.godmode do wait(1) pcall(function()
+    if _G.godmode == false then return  end
+    game:GetService("Players").LocalPlayer.Character.BindableEvent:Destroy()
+  end)
+end
+ 
+if _G.invisible then
+    if _G.invisible == false then return end
+    if game:GetService("Players").LocalPlayer.Character.LowerTorso:FindFirstChild'Root' then
+game:GetService("Players").LocalPlayer.Character.LowerTorso.Root:Remove()
+end
+if game:GetService("Players").LocalPlayer.Character.UpperTorso:FindFirstChild'Waist' then
+game:GetService("Players").LocalPlayer.Character.UpperTorso.Waist:Remove()
+end
+end
